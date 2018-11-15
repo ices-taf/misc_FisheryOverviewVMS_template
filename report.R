@@ -5,3 +5,4 @@
 
 source("report_fishing_effort.R")
 source("report_abrasion.R")
+source("report_plots.R")
