@@ -10,28 +10,24 @@ library(dplyr)
 library(glue)
 library(jsonlite)
 library(sp)
+library(sfdSAR)
 
 # read in config
 config <- read_json("config.json")
+
+# load data
+data("ices_ecoregions")
+data("coastline")
 
 # read in data
 vms <- read.taf("data/fishing_activity.csv")
 ecoregion_table <- read.taf("bootstrap/data/ecoregion_table.csv")
 
-# get ecoregion name
+# get ecoregion shape
 ecoregion_name <-
   ecoregion_table$Description[ecoregion_table$Key == config$ecoregion]
+ecoregion <- ices_ecoregions[ices_ecoregions$Ecoregion == ecoregion_name,]
 
-# read in config
-config <- read_json("config.json")
-
-# read in data
-vms <- read.taf("data/fishing_activity.csv")
-ecoregion_table <- read.taf("bootstrap/data/ecoregion_table.csv")
-
-# get ecoregion name
-ecoregion_name <-
-  ecoregion_table$Description[ecoregion_table$Key == config$ecoregion]
 
 # surface abrasion map plot
 

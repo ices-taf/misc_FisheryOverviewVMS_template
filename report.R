@@ -3,6 +3,8 @@
 ## Before:
 ## After:
 
-source("report_fishing_effort.R")
-source("report_abrasion.R")
-source("report_plots.R")
+library(icesTAF)
+
+sourceTAF("report_fishing_effort.R")
+sourceTAF("report_abrasion.R")
+sourceTAF("report_plots.R")
