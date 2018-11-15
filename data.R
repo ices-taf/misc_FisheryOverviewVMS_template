@@ -51,20 +51,21 @@ vms$surface <-
                           vms$gearWidth_filled,
                           vms$ICES_avg_fishing_speed)
 
-# compute summaries over groups - can we divide by area afterwards...?
+# compute summaries over groups
 output <-
   vms %>%
+#   filter(c_square == '1500:390:134:3' &
+#          benthis_met %in% c('OT_CRU', 'OT_DMF', 'OT_MIX', 'OT_MIX_CRU', 'TBB_CRU', 'TBB_DMF')) %>%
     mutate(
       mw_fishinghours = kw_fishinghours / 1000
     ) %>%
-    group_by(c_square, Fishing_category_FO) %>%
+    group_by(year, c_square, Fishing_category_FO) %>%
     summarise(
-      mw_fishinghours = sum(mw_fishinghours) / 4,
-      surface_sar = sum(surface / area) / 4,
-      subsurface_sar = sum(surface * subsurface_prop / area) / 400
+      mw_fishinghours = sum(mw_fishinghours, na.rm = TRUE),
+      subsurface = sum(surface * subsurface_prop * .01, na.rm = TRUE),
+      surface = sum(surface, na.rm = TRUE)
     ) %>%
   ungroup %>%
-  filter(!is.na(Fishing_category_FO)) %>%
   mutate(
     lat = sfdSAR::csquare_lat(c_square),
     lon = sfdSAR::csquare_lon(c_square)
