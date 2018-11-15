@@ -49,6 +49,19 @@ vms_sub <-
   vms %>%
   filter(Fishing_category_FO %in% names(config$effort_map))
 
+# calculate annual averages
+vms_sub <-
+  vms_sub %>%
+    group_by(c_square, Fishing_category_FO) %>%
+    summarise(
+      mw_fishinghours = mean(mw_fishinghours, na.rm = TRUE)
+    ) %>%
+  ungroup() %>%
+    mutate(
+      lat = sfdSAR::csquare_lat(c_square),
+      lon = sfdSAR::csquare_lon(c_square)
+    )
+
 
 mfrow <- layout(length(config$effort_map))
 png("report/effort_maps.png",
@@ -66,7 +79,3 @@ plotPages(vms_sub$mw_fishinghours,
           breaks = c(0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000))
 
 dev.off()
-
-
-plot(make_raster(vms_sub$mw_fishinghours, vms_sub[c("lon", "lat")], 0.05))
-
