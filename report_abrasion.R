@@ -9,6 +9,7 @@ library(icesTAF)
 library(dplyr)
 library(glue)
 library(jsonlite)
+library(sp)
 
 # read in config
 config <- read_json("config.json")

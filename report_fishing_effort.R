@@ -9,6 +9,7 @@ library(icesTAF)
 library(dplyr)
 library(glue)
 library(jsonlite)
+library(sp)
 
 # make dir
 mkdir("report")
