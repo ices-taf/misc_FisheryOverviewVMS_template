@@ -4,9 +4,7 @@
 ## After:
 
 # libraries
-#install_github("ices-tools-dev/sfdMaps")
-#library(sfdMaps)
-devtools::load_all("../../ices-tools-dev/sfdMaps/")
+library(sfdMaps)
 library(icesTAF)
 library(dplyr)
 library(glue)

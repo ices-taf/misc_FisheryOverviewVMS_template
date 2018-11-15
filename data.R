@@ -5,8 +5,6 @@
 
 
 # packages
-#install_github("ices-tools-dev/sfdSAR")
-devtools::load_all("../../ices-tools-dev/sfdSAR/")
 library(icesTAF)
 library(sfdSAR)
 library(dplyr)
@@ -54,8 +52,6 @@ vms$surface <-
 # compute summaries over groups
 output <-
   vms %>%
-#   filter(c_square == '1500:390:134:3' &
-#          benthis_met %in% c('OT_CRU', 'OT_DMF', 'OT_MIX', 'OT_MIX_CRU', 'TBB_CRU', 'TBB_DMF')) %>%
     mutate(
       mw_fishinghours = kw_fishinghours / 1000
     ) %>%

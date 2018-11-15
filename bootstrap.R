@@ -6,8 +6,7 @@ library(icesVocab)
 library(glue)
 library(jsonlite)
 library(sp)
-#library(sfdMaps)
-devtools::load_all("../../ices-tools-dev/sfdMaps/")
+library(sfdMaps)
 
 # settings
 config <- read_json("config.json")
