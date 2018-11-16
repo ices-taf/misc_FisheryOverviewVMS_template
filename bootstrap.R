@@ -7,6 +7,7 @@ library(glue)
 library(jsonlite)
 library(sp)
 library(sfdMaps)
+library(rgeos)
 
 # settings
 config <- read_json("config.json")
