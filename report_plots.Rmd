@@ -44,7 +44,7 @@ cat(glue(gsub("\n", "", label_1)))
 label_2 <-
 "**Figure X** Average annual subsurface (left) and surface (right) disturbance by
  mobile bottom contacting fishing gear
- ({paste(unlist(config$effort_map), collapse = ', ')}) in the
+ ({paste(unlist(config$gears), collapse = ', ')}) in the
  {ecoregion_name} during {config$year - 3}-{config$year}, expressed as
  average swept area ratios (SAR)."
 

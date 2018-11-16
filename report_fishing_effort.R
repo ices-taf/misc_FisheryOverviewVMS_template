@@ -31,23 +31,20 @@ ecoregion_name <-
   ecoregion_table$Description[ecoregion_table$Key == config$ecoregion]
 ecoregion <- ices_ecoregions[ices_ecoregions$Ecoregion == ecoregion_name,]
 
-
-# fishing effort map text
-
-label_1 <-
-"Figure X Spatial distribution of average annual fishing effort
- (mW fishing hours) in the {ecoregion_name} during
- {config$year - 3}-{config$year}, by gear type. Fishing effort data are
- only shown for vessels >12 m having vessel monitoring systems (VMS)."
-
-label_1 <- glue(gsub("\n", "", label_1))
-
 # fishing effort map plot
+
+# format gear names
+format_gear <- function(x) {
+  x <- paste0(toupper(substring(x,1,1)), substring(x, 2))
+  gsub("_", " ", x)
+}
+names(config$gears) <- sapply(names(config$gears), format_gear)
+config$gears
 
 # subset data
 vms_sub <-
   vms %>%
-  filter(Fishing_category_FO %in% names(config$effort_map))
+  filter(Fishing_category_FO %in% names(config$gear))
 
 # calculate annual averages
 vms_sub <-
@@ -75,7 +72,7 @@ plotPages(vms_sub$mw_fishinghours,
           ecoregion,
           glue("Average mW Fishing hours {config$year - 3}-{config$year}"),
           "mW Fishing hours",
-          unlist(config$effort_map),
+          unlist(config$gear),
           breaks = c(0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000))
 
 dev.off()

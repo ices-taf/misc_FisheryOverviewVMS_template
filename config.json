@@ -1,37 +1,13 @@
 {
-  // which data table in the VMS databse to read from
-  "vms_table": "_ICES_VMS_Datacall_VMS",
-
-  // last data year (usually last year)
-  "year" : 2017,
-
-  // ecoregion code: https://vocab.ices.dk/?ref=1414
-  "ecoregion_code": "NrS",
-  //"ecoregion_code": "CS",
-  // "NrS", CS", "BtS"
-
-  // list of gears to include in effort map, and the name to use in the title
-  // options are:
-  // Beam, Demersal seine, Dredge, Midwater, Other, Otter, Static
-  // Greater North Sea and Celtic Seas
-  "effort_map": {
-    "Static": "Static gears",
-    "Midwater": "Pelagic trawls and seines",
-    "Otter": "Bottom otter trawls",
-    "Demersal seine": "Bottom seines",
-    "Dredge": "Dredges",
-    "Beam": "Beam trawls"
-    //"Other": "Other gears"
+  "ecoregion": "NrS",
+  "year": 2017,
+  "table": "_ICES_VMS_Datacall_VMS",
+  "gears": {
+    "static": "Static gears",
+    "midwater": "Pelagic trawls and seines",
+    "otter": "Bottom otter trawls",
+    "demersal_seine": "Bottom seines",
+    "dredge": "Dredges",
+    "beam": "Beam trawls"
   }
-
-  // Baltic Sea
-  //"effort_map": {
-  //  "Static": "Static gears",
-  //  "Midwater": "Pelagic",
-  //  "Otter": "Bottom trawls",
-  //  "Demersal seine": "Bottom seines",
-  //  //"Dredge": "Dredges",
-  //  "Beam": "Beam trawls"
-  //  //"Other": "Other gears"
-  //}
 }
