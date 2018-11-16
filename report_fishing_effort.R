@@ -39,12 +39,14 @@ format_gear <- function(x) {
   gsub("_", " ", x)
 }
 names(config$gears) <- sapply(names(config$gears), format_gear)
-config$gears
 
 # subset data
 vms_sub <-
   vms %>%
-  filter(Fishing_category_FO %in% names(config$gear))
+  filter(Fishing_category_FO %in% names(config$gears))
+
+# adjust gear list
+config$gears <- config$gears[names(config$gears) %in% unique(vms_sub$Fishing_category_FO)]
 
 # calculate annual averages
 vms_sub <-
@@ -72,7 +74,7 @@ plotPages(vms_sub$mw_fishinghours,
           ecoregion,
           glue("Average mW Fishing hours {config$year - 3}-{config$year}"),
           "mW Fishing hours",
-          unlist(config$gear),
+          unlist(config$gears),
           breaks = c(0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000))
 
 dev.off()
