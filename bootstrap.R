@@ -28,32 +28,51 @@ ecoregion_table$Description <-
 write.taf(ecoregion_table, file = "bootstrap/data/ecoregion_table.csv")
 
 
-
 # fetch vms ----
 
+# get ecoregion shape to improve SQL query
+data("ices_ecoregions")
+ecoregion_name <-
+  ecoregion_table$Description[ecoregion_table$Key == config$ecoregion]
+ecoregion <- ices_ecoregions[ices_ecoregions$Ecoregion == ecoregion_name,]
+
+# get ecoregion extent, and make a raster with 0.05 resolution
+x <- as(extent(ecoregion), "SpatialPolygons")
+r <- make_raster(rep(0, 4), x@polygons[[1]]@Polygons[[1]]@coords)
+
+# get the coordinates and calculate the unique largest scale c-squares
+coords <- coordinates(r)
+lon <- coords[,"x"]
+lat <- coords[,"y"]
+
+csquare_quad <- ( 4 - (((2 *
+        floor(1 + (lon/200))) - 1) * ((2 * floor(1 + (lat/200))) +
+        1))    ) * 1000 + floor(abs(lat)/10) * 100 + floor(abs(lon)/10)
+
+csquare_quad <- unique(csquare_quad)
+
+# format into an sql clause
+csquare_text <-
+  paste0("substring(c_square, 1, 4) in ('", paste(csquare_quad, collapse = "', '"), "')")
+
+# query the DB
 dbConnection <- 'Driver={SQL Server};Server=SQL06;Database=VMS;Trusted_Connection=yes'
 sqlq <- glue("select year, c_square, LE_MET_level6,
                      kw_fishinghours,
                      avg_oal, avg_kw, avg_gearWidth,
                      fishing_hours, ICES_avg_fishing_speed
               from {config$table}
-              where (year > {config$year - 4}) and (year < {config$year + 1})")
+              where (year > {config$year - 4}) and (year < {config$year + 1}) and {csquare_text}")
 conn <- odbcDriverConnect(connection = dbConnection)
 vms <- sqlQuery(conn, sqlq)
 odbcClose(conn)
 
-# subset vms by ecoregion ----
+# do a finer subset by ecoregion ----
 
 # get centre coordinates of each unique c_square
 loc <- data.frame(c_square = unique(vms$c_square))
 loc$x <- sfdSAR::csquare_lon(loc$c_square)
 loc$y <- sfdSAR::csquare_lat(loc$c_square)
-
-# get ecoregion
-ecoregion_name <-
-  ecoregion_table$Description[ecoregion_table$Key == config$ecoregion]
-data("ices_ecoregions")
-ecoregion <- ices_ecoregions[ices_ecoregions$Ecoregion == ecoregion_name,]
 
 # filter coursely on bounding box first
 bb <- bbox(ecoregion)
