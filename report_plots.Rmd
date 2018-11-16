@@ -37,8 +37,8 @@ label_1 <-
 cat(glue(gsub("\n", "", label_1)))
 ```
 
-![](report/surface_sar.png)
 ![](report/subsurface_sar.png)
+![](report/surface_sar.png)
 
 ```{r sar_plot, results = "asis", echo = FALSE}
 label_2 <-
