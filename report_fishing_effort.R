@@ -60,7 +60,7 @@ vms_sub <-
     )
 
 
-mfrow <- layout(length(config$effort_map))
+mfrow <- layout(length(config$gear))
 png("report/effort_maps.png",
     width = mfrow[2]*5.6 + 3, height = mfrow[1]*5.6,
     res = 400, units = "cm", pointsize = 10)
