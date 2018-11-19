@@ -17,6 +17,7 @@ config <- read_json("config.json")
 mkdir("bootstrap/data")
 
 # get Ecoregion list ----
+msg("Reading ecosystem information from ices vocab.")
 
 ecoregion_table <- icesVocab::getCodeList("Ecoregion")
 
@@ -30,6 +31,7 @@ write.taf(ecoregion_table, file = "bootstrap/data/ecoregion_table.csv")
 
 
 # fetch vms ----
+msg("downloading vms data from DB")
 
 # get ecoregion shape to improve SQL query
 data("ices_ecoregions")
@@ -69,6 +71,7 @@ vms <- sqlQuery(conn, sqlq)
 odbcClose(conn)
 
 # do a finer subset by ecoregion ----
+msg("subsetting vms data to ecoregion.")
 
 # get centre coordinates of each unique c_square
 loc <- data.frame(c_square = unique(vms$c_square))
@@ -93,4 +96,5 @@ vms <- vms[vms$c_square %in% loc$c_square,]
 vms$area <- sfdSAR::csquare_area(vms$c_square)
 
 # save data
+msg("saving vms data locally")
 write.taf(vms, file = "bootstrap/data/vms.csv")
