@@ -8,6 +8,7 @@ library(jsonlite)
 library(sp)
 library(sfdMaps)
 library(rgeos)
+library(raster)
 
 # settings
 config <- read_json("config.json")
