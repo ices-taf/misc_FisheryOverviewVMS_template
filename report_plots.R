@@ -16,6 +16,6 @@ ecoregion_name <-
 
 ecoregion_name <- gsub(" ", "_", ecoregion_name)
 
-fname <-  glue("{ecoregion_name}_fisheries_maps.docx")
+fname <-  glue("{ecoregion_name}_{config$year}_fisheries_maps.docx")
 rmarkdown::render("report_plots.Rmd", output_file = fname)
 cp(fname, "report", move = TRUE)
