@@ -41,10 +41,13 @@ cat(glue(gsub("\n", "", label_1)))
 ![](report/surface_sar.png)
 
 ```{r sar_plot, results = "asis", echo = FALSE}
+gears <- 
+  config$gears[
+    names(config$gears) %in% c("otter", "demersal_seine", "beam", "dredge")]
 label_2 <-
 "**Figure X** Average annual subsurface (left) and surface (right) disturbance by
  mobile bottom contacting fishing gear
- ({paste(unlist(config$gears), collapse = ', ')}) in the
+ ({paste(unlist(gears), collapse = ', ')}) in the
  {ecoregion_name} during {config$year - 3}-{config$year}, expressed as
  average swept area ratios (SAR)."
 
