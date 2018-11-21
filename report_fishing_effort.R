@@ -59,7 +59,10 @@ vms_sub <-
     mutate(
       lat = sfdSAR::csquare_lat(c_square),
       lon = sfdSAR::csquare_lon(c_square)
-    )
+    ) %>%
+  filter(
+    mw_fishinghours > 0
+  )
 
 
 mfrow <- layout(length(config$gear))

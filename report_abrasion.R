@@ -52,7 +52,10 @@ vms_sub <-
     mutate(
       lat = sfdSAR::csquare_lat(c_square),
       lon = sfdSAR::csquare_lon(c_square)
-    )
+    ) %>%
+  filter(
+    surface_sar > 0
+  )
 
 # make an all feild
 vms_sub$all_gears <- "all"
