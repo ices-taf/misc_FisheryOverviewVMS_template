@@ -81,3 +81,24 @@ plotPages(vms_sub$mw_fishinghours,
           breaks = c(0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000))
 
 dev.off()
+
+# save data
+# save a summary of the data
+vms_sub_lat <-
+  vms_sub %>%
+    group_by(lat, Fishing_category_FO) %>%
+    summarise(
+      mw_fishinghours = sum(mw_fishinghours, na.rm = TRUE)
+    ) %>%
+    ungroup
+
+vms_sub_lon <-
+  vms_sub %>%
+    group_by(lon, Fishing_category_FO) %>%
+    summarise(
+      mw_fishinghours = sum(mw_fishinghours, na.rm = TRUE)
+    ) %>%
+    ungroup
+
+write.taf(vms_sub_lat, "report/effort_map_by_latitude.csv")
+write.taf(vms_sub_lon, "report/effort_map_by_longitude.csv")

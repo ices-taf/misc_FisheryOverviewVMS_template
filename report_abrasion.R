@@ -72,22 +72,53 @@ plotPages(vms_sub$surface_sar,
           "Surface SweptArea Ratio",
           c("all" = "All gears"),
           breaks = c(0, 0.5, 1, 2, 5, 10, 20, 50, Inf),
-          digits = 1)
+          digits = 3)
 
 dev.off()
+
+
+vms_subsub <-
+  vms_sub %>%
+  filter(
+    subsurface_sar > 0
+  )
 
 png("report/subsurface_sar.png",
     width = 8.4, height = 8.4,
     res = 400, units = "cm", pointsize = 5)
 
-plotPages(vms_sub$subsurface_sar,
-          vms_sub[c("lon", "lat")],
-          vms_sub$all_gears,
+plotPages(vms_subsub$subsurface_sar,
+          vms_subsub[c("lon", "lat")],
+          vms_subsub$all_gears,
           ecoregion,
           glue("Average subsurface swept area ratio {config$year - 3}-{config$year}"),
           "Subsurface SweptArea Ratio",
           c("all" = "All gears"),
           breaks = c(0, 0.5, 1, 2, 5, 10, 20, 50, Inf) / 10,
-          digits = 2)
+          digits = 4)
 
 dev.off()
+
+
+# save a summary of the data
+vms_sub_lat <-
+  vms_sub %>%
+    group_by(lat) %>%
+    summarise(
+      surface_sar = sum(surface_sar, na.rm = TRUE),
+      subsurface_sar = sum(subsurface_sar, na.rm = TRUE)
+    ) %>%
+    ungroup
+
+vms_sub_lon <-
+  vms_sub %>%
+    group_by(lon) %>%
+    summarise(
+      surface_sar = sum(surface_sar, na.rm = TRUE),
+      subsurface_sar = sum(subsurface_sar, na.rm = TRUE)
+    ) %>%
+    ungroup
+
+write.taf(vms_sub_lat, "report/surface_subsurface_sar_by_latitude.csv")
+write.taf(vms_sub_lon, "report/surface_subsurface_sar_by_longitude.csv")
+
