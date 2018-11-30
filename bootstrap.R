@@ -65,7 +65,7 @@ sqlq <- glue("select year, c_square, LE_MET_level6,
                      avg_oal, avg_kw, avg_gearWidth,
                      fishing_hours, ICES_avg_fishing_speed
               from {config$table}
-              where (year > {config$year - 4}) and (year < {config$year + 1}) and {csquare_text}")
+              where (year > {config$year - 4}) and (year < {config$year + 1}) and {csquare_text} and country != 'esp'")
 conn <- odbcDriverConnect(connection = dbConnection)
 vms <- sqlQuery(conn, sqlq)
 odbcClose(conn)
