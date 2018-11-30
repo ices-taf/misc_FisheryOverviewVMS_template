@@ -72,7 +72,7 @@ plotPages(vms_sub$surface_sar,
           "Surface SweptArea Ratio",
           c("all" = "All gears"),
           breaks = c(0, 0.5, 1, 2, 5, 10, 20, 50, Inf),
-          digits = 3)
+          digits = 1)
 
 dev.off()
 
@@ -95,7 +95,7 @@ plotPages(vms_subsub$subsurface_sar,
           "Subsurface SweptArea Ratio",
           c("all" = "All gears"),
           breaks = c(0, 0.5, 1, 2, 5, 10, 20, 50, Inf) / 10,
-          digits = 4)
+          digits = 2)
 
 dev.off()
 
