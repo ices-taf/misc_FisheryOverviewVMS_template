@@ -4,7 +4,7 @@ output:
     fig_caption: true
     fig_height: 10
     fig_width: 10
-    reference_docx: bootstrap/initial/summaryTemplate.docx
+    reference_docx: bootstrap/initial/data/summaryTemplate.docx
     toc: false
     keep_md: false
 ---
@@ -15,10 +15,10 @@ library(jsonlite)
 library(glue)
 
 # read in config
-config <- read_json("config.json")
+config <- read_json("bootstrap/initial/data/config.json")
 
 # read in data
-ecoregion_table <- read.taf("bootstrap/data/ecoregion_table.csv")
+ecoregion_table <- read.taf("bootstrap/data/ecoregion_table/ecoregion_table.csv")
 
 # get ecoregion shape
 ecoregion_name <-

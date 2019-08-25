@@ -1,5 +1,5 @@
 {
-  "ecoregion": "NrS",
+  "ecoregion": "BtS",
   "year": 2017,
   "table": "_ICES_VMS_Datacall_VMS",
   "gears": {
@@ -7,7 +7,6 @@
     "midwater": "Pelagic trawls and seines",
     "otter": "Bottom otter trawls",
     "demersal_seine": "Bottom seines",
-    "dredge": "Dredges",
     "beam": "Beam trawls"
   }
 }

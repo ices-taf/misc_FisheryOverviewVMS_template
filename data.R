@@ -3,17 +3,16 @@
 ## Before:
 ## After:
 
-
 # packages
 library(icesTAF)
-library(sfdSAR)
+taf.library(sfdSAR)
 library(dplyr)
 
 # make folder
 mkdir("data")
 
 # read in raw vms - NOTE ADD PRIVICY to dataset
-vms <- read.taf("bootstrap/data/vms.csv")
+vms <- read.taf("bootstrap/data/vms/vms.csv")
 
 # load data
 data(gear_widths)

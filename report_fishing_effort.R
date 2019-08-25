@@ -16,7 +16,7 @@ library(sfdSAR)
 mkdir("report")
 
 # read in config
-config <- read_json("config.json")
+config <- read_json("bootstrap/initial/data/config.json")
 
 # load data
 data("ices_ecoregions")
@@ -24,7 +24,7 @@ data("coastline")
 
 # read in data
 vms <- read.taf("data/fishing_activity.csv")
-ecoregion_table <- read.taf("bootstrap/data/ecoregion_table.csv")
+ecoregion_table <- read.taf("bootstrap/data/ecoregion_table/ecoregion_table.csv")
 
 # get ecoregion shape
 ecoregion_name <-

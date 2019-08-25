@@ -1,3 +1,12 @@
+#' @Misc{vms,
+#'   originator  = {},
+#'   year        = {2019},
+#'   title       = {},
+#'   period      = {},
+#'   source      = {script},
+#'   data_policy = {vms}
+#' }
+
 
 # packages
 library(RODBC)
@@ -11,24 +20,7 @@ library(rgeos)
 library(raster)
 
 # settings
-config <- read_json("config.json")
-
-# create directories
-mkdir("bootstrap/data")
-
-# get Ecoregion list ----
-msg("Reading ecosystem information from ices vocab.")
-
-ecoregion_table <- icesVocab::getCodeList("Ecoregion")
-
-ecoregion_table <- ecoregion_table[c("Key", "Description")]
-
-ecoregion_table$Description <-
-  gsub(" Ecoregion", "", ecoregion_table$Description)
-
-# save data
-write.taf(ecoregion_table, file = "bootstrap/data/ecoregion_table.csv")
-
+config <- read_json("../../initial/data/config.json")
 
 # fetch vms ----
 msg("downloading vms data from DB")
@@ -49,8 +41,8 @@ lon <- coords[,"x"]
 lat <- coords[,"y"]
 
 csquare_quad <- ( 4 - (((2 *
-        floor(1 + (lon/200))) - 1) * ((2 * floor(1 + (lat/200))) +
-        1))    ) * 1000 + floor(abs(lat)/10) * 100 + floor(abs(lon)/10)
+                           floor(1 + (lon/200))) - 1) * ((2 * floor(1 + (lat/200))) +
+                                                           1))    ) * 1000 + floor(abs(lat)/10) * 100 + floor(abs(lon)/10)
 
 csquare_quad <- unique(csquare_quad)
 
@@ -81,7 +73,7 @@ loc$y <- sfdSAR::csquare_lat(loc$c_square)
 # filter coursely on bounding box first
 bb <- bbox(ecoregion)
 loc <- loc[loc$x >= bb["x", "min"] & loc$x <= bb["x", "max"] &
-           loc$y >= bb["y", "min"] & loc$y <= bb["y", "max"], ]
+             loc$y >= bb["y", "min"] & loc$y <= bb["y", "max"], ]
 
 # now use a spatial method
 coordinates(loc) <- ~ x + y
@@ -96,5 +88,5 @@ vms <- vms[vms$c_square %in% loc$c_square,]
 vms$area <- sfdSAR::csquare_area(vms$c_square)
 
 # save data
-msg("saving vms data locally")
-write.taf(vms, file = "bootstrap/data/vms.csv")
+msg("saving vms data")
+write.taf(vms)

@@ -4,3 +4,10 @@
 .Ruserdata
 
 *.Rproj
+
+/bootstrap/data/
+/bootstrap/library/
+/bootstrap/software/
+
+/data/
+/report/
