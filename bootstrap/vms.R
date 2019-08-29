@@ -26,7 +26,10 @@ config <- read_json("../../initial/data/config.json")
 msg("downloading vms data from DB")
 
 # get ecoregion shape to improve SQL query
-data("ices_ecoregions")
+layer <- tools::file_path_sans_ext(dir("../ICES_ecoregions/", pattern = "*.dbf"))
+msg("reading ICES ecorgions layer: ", layer, "")
+ices_ecoregions <- rgdal::readOGR("../ICES_ecoregions", layer)
+
 ecoregion_name <-
   ecoregion_table$Description[ecoregion_table$Key == config$ecoregion]
 ecoregion <- ices_ecoregions[ices_ecoregions$Ecoregion == ecoregion_name,]

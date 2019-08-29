@@ -16,7 +16,7 @@ library(sfdSAR)
 config <- read_json("bootstrap/initial/data/config.json")
 
 # load data
-data("ices_ecoregions")
+ices_ecoregions <- rgdal::readOGR("bootstrap/data/ICES_ecoregions", "ICES_ecoregions_20171207_erase_ESRI")
 data("coastline")
 
 # read in data
