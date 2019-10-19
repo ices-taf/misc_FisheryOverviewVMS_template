@@ -3,11 +3,15 @@
 .RData
 .Ruserdata
 
+
 *.Rproj
 
 /bootstrap/data/
-/bootstrap/library/
 /bootstrap/software/
+/bootstrap/library/
+/bootstrap/initial/data-raw/
 
 /data/
+/model/
+/output/
 /report/

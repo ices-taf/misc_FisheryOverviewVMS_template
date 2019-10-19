@@ -1,7 +1,6 @@
+library(icesTAF)
+taf.library(icesFO)
 
-filename <- "ICES_ecoregions.zip"
-# download and unzip
-download(paste0("http://gis.ices.dk/shapefiles/", filename))
-unzip(filename)
-# delete zip file
-unlink(filename)
+ecoregion <- icesFO::load_ecoregion("Greater North Sea")
+
+sf::st_write(ecoregion, "ecoregion.csv", layer_options = "GEOMETRY=AS_WKT")
